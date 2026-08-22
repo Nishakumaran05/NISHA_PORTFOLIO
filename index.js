@@ -225,6 +225,7 @@ backTop.addEventListener("click", () => {
 
 const form = document.getElementById("contactForm");
 const submitBtn = form.querySelector('button[type="submit"]');
+const formStatus = document.getElementById("formStatus");
 
 form.addEventListener("submit", async (e) => {
 
@@ -239,7 +240,17 @@ form.addEventListener("submit", async (e) => {
 
     const originalText = submitBtn.innerHTML;
 
-    submitBtn.innerHTML = "Sending...";
+    // Clear previous message
+    formStatus.className = "form-status";
+    formStatus.innerHTML = "";
+
+    // Loading state
+    submitBtn.innerHTML = `
+        <span>Sending...</span>
+        <i class="fa-solid fa-spinner"></i>
+    `;
+
+    submitBtn.classList.add("loading");
     submitBtn.disabled = true;
 
     try {
@@ -256,29 +267,53 @@ form.addEventListener("submit", async (e) => {
 
         if (response.ok && data.success) {
 
-            alert("Success! Your message has been sent.");
+            // Success message
+            formStatus.className = "form-status success";
 
+            formStatus.innerHTML = `
+                <i class="fa-solid fa-circle-check"></i>
+                <span>
+                    Message sent successfully! I'll get back to you soon.
+                </span>
+            `;
+
+            // Clear form
             form.reset();
 
         } else {
 
-            alert("Error: " + data.message);
+            // Error message
+            formStatus.className = "form-status error";
+
+            formStatus.innerHTML = `
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <span>
+                    ${data.message || "Unable to send your message. Please try again."}
+                </span>
+            `;
 
         }
 
     } catch (error) {
 
-        alert("Something went wrong. Please try again.");
+        formStatus.className = "form-status error";
+
+        formStatus.innerHTML = `
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <span>
+                Something went wrong. Please check your connection and try again.
+            </span>
+        `;
 
     } finally {
 
         submitBtn.innerHTML = originalText;
+        submitBtn.classList.remove("loading");
         submitBtn.disabled = false;
 
     }
 
 });
-
 /* ================= PROJECT HOVER ================= */
 
 const projectCards =
