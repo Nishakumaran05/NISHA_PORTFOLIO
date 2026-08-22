@@ -220,79 +220,64 @@ backTop.addEventListener("click", () => {
 });
 
 
+
 /* ================= CONTACT FORM ================= */
 
-const contactForm =
-    document.getElementById("contactForm");
+const form = document.getElementById("contactForm");
+const submitBtn = form.querySelector('button[type="submit"]');
 
-const formMessage =
-    document.getElementById("formMessage");
+form.addEventListener("submit", async (e) => {
 
+    e.preventDefault();
 
-contactForm.addEventListener("submit", event => {
+    const formData = new FormData(form);
 
-    event.preventDefault();
+    formData.append(
+        "access_key",
+        "16052b41-5a39-4502-bf09-d0e771e60b1d"
+    );
 
+    const originalText = submitBtn.innerHTML;
 
-    const name =
-        document.getElementById("name").value.trim();
+    submitBtn.innerHTML = "Sending...";
+    submitBtn.disabled = true;
 
-    const email =
-        document.getElementById("email").value.trim();
+    try {
 
-    const subject =
-        document.getElementById("subject").value.trim();
+        const response = await fetch(
+            "https://api.web3forms.com/submit",
+            {
+                method: "POST",
+                body: formData
+            }
+        );
 
-    const message =
-        document.getElementById("message").value.trim();
+        const data = await response.json();
 
+        if (response.ok && data.success) {
 
-    if (
-        name === "" ||
-        email === "" ||
-        subject === "" ||
-        message === ""
-    ) {
+            alert("Success! Your message has been sent.");
 
-        formMessage.textContent =
-            "Please fill in all fields.";
+            form.reset();
 
-        formMessage.style.color =
-            "#ff5c5c";
+        } else {
 
-        return;
+            alert("Error: " + data.message);
 
-    }
+        }
 
+    } catch (error) {
 
-    const emailPattern =
-        /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        alert("Something went wrong. Please try again.");
 
+    } finally {
 
-    if (!emailPattern.test(email)) {
-
-        formMessage.textContent =
-            "Please enter a valid email address.";
-
-        formMessage.style.color =
-            "#ff5c5c";
-
-        return;
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
 
     }
-
-
-    formMessage.textContent =
-        "Thank you! Your message has been prepared successfully.";
-
-    formMessage.style.color =
-        "#00e5ff";
-
-
-    contactForm.reset();
 
 });
-
 
 /* ================= PROJECT HOVER ================= */
 
