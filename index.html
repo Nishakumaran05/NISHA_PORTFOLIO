@@ -1030,71 +1030,48 @@
 
                     <form class="contact-form reveal" id="contactForm">
 
+                        <input type="hidden" name="subject" value="New Message from Nisha's Portfolio">
+
                         <div class="input-group">
 
-                            <label for="name">
-                                Your Name
-                            </label>
+                            <label for="name">Your Name</label>
 
-                            <input type="text"
-                                id="name"
-                                placeholder="Enter your name"
-                                required>
+                            <input type="text" id="name" name="name" placeholder="Enter your name" required>
 
                         </div>
 
-
                         <div class="input-group">
 
-                            <label for="email">
-                                Email Address
-                            </label>
+                            <label for="email">Email Address</label>
 
-                            <input type="email"
-                                id="email"
-                                placeholder="Enter your email"
-                                required>
+                            <input type="email" id="email" name="email" placeholder="Enter your email" required>
 
                         </div>
 
-
                         <div class="input-group">
 
-                            <label for="subject">
-                                Subject
-                            </label>
+                            <label for="messageSubject">Subject</label>
 
-                            <input type="text"
-                                id="subject"
-                                placeholder="What is this about?"
-                                required>
+                            <input type="text" id="messageSubject" name="message_subject"
+                                placeholder="What is this about?" required>
 
                         </div>
 
-
                         <div class="input-group">
 
-                            <label for="message">
-                                Message
-                            </label>
+                            <label for="message">Message</label>
 
-                            <textarea id="message"
-                                rows="6"
-                                placeholder="Write your message..."
+                            <textarea id="message" name="message" rows="6" placeholder="Write your message..."
                                 required></textarea>
 
                         </div>
 
-
                         <button type="submit" class="btn primary-btn submit-btn">
 
                             Send Message
-
                             <i class="fa-solid fa-paper-plane"></i>
 
                         </button>
-
-                        <p id="formMessage"></p>
 
                     </form>
 
